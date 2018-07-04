@@ -1,6 +1,7 @@
 package servestatic
 
 import (
+	"net/http"
 	"os"
 	"errors"
 )
@@ -35,4 +36,10 @@ func NewFileServer(rootDir string, usingHost bool) (*FileServer, error) {
 
 		UsingHostFolder: usingHost,
 	}, nil
+}
+
+func (m *FileServer) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	m.ServeFiles(w, r, func(resolvedLocation string) {
+		http.NotFound(w, r)
+	})
 }
