@@ -1,9 +1,9 @@
 package servestatic
 
 import (
+	"errors"
 	"net/http"
 	"os"
-	"errors"
 )
 
 var (

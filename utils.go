@@ -1,9 +1,9 @@
 package servestatic
 
 import (
-	"regexp"
-	"path/filepath"
 	"os"
+	"path/filepath"
+	"regexp"
 )
 
 var mNameInPathRegexp = regexp.MustCompile(".*/([^/]+)")

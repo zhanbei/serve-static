@@ -1,9 +1,9 @@
 package servestatic
 
 import (
+	"fmt"
 	"net/http"
 	"strings"
-	"fmt"
 )
 
 const Slash = "/"
