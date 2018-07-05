@@ -1,7 +1,6 @@
 package servestatic
 
 import (
-	"fmt"
 	"net/http"
 	"strings"
 )
@@ -58,7 +57,7 @@ func (m *FileServer) ServeFiles(w http.ResponseWriter, r *http.Request, next fun
 		}
 		// 4. Serve the target html file if no dot is found in the request.path.
 		upgradedPath := reqPath + Slash + targetHtml + DotHtml
-		fmt.Println("I: Upgrading Requested URL.Path from:", reqPath, " to:", upgradedPath)
+		//fmt.Println("I: Upgrading Requested URL.Path from:", reqPath, " to:", upgradedPath)
 		m.serveFile(w, r, upgradedPath, next)
 	}
 }
