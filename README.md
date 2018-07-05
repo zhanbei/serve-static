@@ -49,7 +49,7 @@ The structure of contents of a static sites may like:
 	- `contact.html` The home page for the contact-us module, which will be matched with the `/contact` path.
 		- `<base href="contact/">` should be added in the `<head>` of the html to make resources referred by relative links work.
 
-## Example
+## Example of Usage
 
 Example can be found [here](example/main.go).
 
