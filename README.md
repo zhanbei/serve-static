@@ -26,3 +26,38 @@ This project is trying to host static sites without the trailing slash.
 	- `/${folder-name}/${target-name}`
 		- Serve `./${folder-name}/${target-name}/${target-name}.html`
 5. Pass through with the resolved path.
+
+## Example
+
+Example can be found [here](example/main.go).
+
+```go
+package main
+
+import (
+	"fmt"
+	"net/http"
+
+	"github.com/zhanbei/serve-static"
+)
+
+var mStaticServer *servestatic.FileServer
+
+const mAddress = "0.0.0.0:1234"
+const mRootDir = "./static"
+const mVirtualHost = false
+
+func init() {
+	server, err := servestatic.NewFileServer(mRootDir, mVirtualHost)
+	if err != nil {
+		panic(err)
+	}
+	mStaticServer = server
+}
+
+func main() {
+	fmt.Println("Server is listening:", mAddress, "and looking after:", mRootDir, "; Using virtual host:", mVirtualHost, ".")
+	// @see https://stackoverflow.com/questions/26559557/how-do-you-serve-a-static-html-file-using-a-go-web-server
+	http.ListenAndServe(mAddress, mStaticServer)
+}
+```
