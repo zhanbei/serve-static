@@ -51,9 +51,12 @@ The structure of contents of a static sites may like:
 
 ## Example of Usage
 
-Example can be found [here](example/main.go).
+You may check out an application here: https://github.com/zhanbei/static-server -- A static server in Go, supporting hosting static files in the no-trailing-slash version.
+
+Here is a basic example shown below, which can also be found here [./example/main.go](example/main.go).
 
 ```go
+// @see ./example/main.go
 package main
 
 import (
