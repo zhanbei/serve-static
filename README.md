@@ -27,6 +27,28 @@ This project is trying to host static sites without the trailing slash.
 		- Serve `./${folder-name}/${target-name}/${target-name}.html`
 5. Pass through with the resolved path.
 
+## Structure of Static Sites Hosted by the Library
+
+We match the file `./site-root/some-section/some-content/some-content.html` for the path `/some-section/some-content` to get rid of the trailing slash, so the structure of static sites hosted by this library are slightly different from normal sites -- the `.../a-folder/a-folder.html` will be matched to the path `.../folder` and the `.../a-folder/index.html` will be not matched to the path `.../folder/` anymore.
+
+The structure of contents of a static sites may like:
+
+- `index.html` The site home page.
+- `blogs` The blogs module.
+	- `any-folder`
+		- `a-normal-blog`
+			- `a-normal-blog.html` The blog, which will be matched with the path: `/blogs/any-folder/a-normal-blog`.
+	- `blogs.html` The home page for the blogs module, which will be matched with the `/blogs` path.
+		- `<base href="blogs/">` should be added in the `<head>` of the html to make resources referred by relative links work.
+- `about` The about module.
+	- `about.html` The home page for the about module, which will be matched with the `/about` path.
+		- `<base href="about/">` should be added in the `<head>` of the html to make resources referred by relative links work.
+	- `some-images.png` Images used in the about module.
+	- `some-attachments.zip` Attachments used in the about module.
+- `contact` The contact-us module.
+	- `contact.html` The home page for the contact-us module, which will be matched with the `/contact` path.
+		- `<base href="contact/">` should be added in the `<head>` of the html to make resources referred by relative links work.
+
 ## Example
 
 Example can be found [here](example/main.go).
