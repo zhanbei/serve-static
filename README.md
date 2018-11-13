@@ -28,7 +28,8 @@ This project is trying to host static sites without the trailing slash.
 		- Serve `./${folder-name}/${target-name}/image-a.png`
 4. Serve the target html file if no dot is found in the request.path.
 	- `/${folder-name}/${target-name}`
-		- Serve `./${folder-name}/${target-name}/${target-name}.html`
+		- Serve `./${folder-name}/${target-name}/${target-name}.html` if any
+		- Serve `./${folder-name}/${target-name}/index.html` if any
 5. Pass through with the resolved path.
 
 ## Structure of Static Sites Hosted by the Library
@@ -109,4 +110,3 @@ You have to decide whether to use the `<base href="${page-name}/">` or not yours
 	- All relative link will break.
 
 *Recommend: No `<base>` and no relative links.*
-	

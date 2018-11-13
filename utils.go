@@ -32,3 +32,11 @@ func (m *FileServer) GetFilePathFromStatics(filePath string) (bool, string) {
 func (m *FileServer) GetFilePathFromStaticsAndDir(dirPath, fileName string) (bool, string) {
 	return IsFileRegular(m.RootDir, dirPath, fileName)
 }
+
+func (m *FileServer) IsFileFromStaticsRegular(dirPath, fileName string) (bool, string) {
+	if m.UsingHostFolder {
+		// Using the r.Host as a folder in m.RootDir.
+		return IsFileRegular(m.RootDir, dirPath, fileName)
+	}
+	return IsFileRegular(m.RootDir, fileName)
+}

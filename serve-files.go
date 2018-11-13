@@ -28,6 +28,24 @@ func (m *FileServer) serveFile(w http.ResponseWriter, r *http.Request, reqPath s
 	}
 }
 
+// Serve potential html file; looking for `.../${test-page}/${test-page}.html` and `.../${test-page}/index.html`.
+func (m *FileServer) serveHtmlFile(w http.ResponseWriter, r *http.Request, reqPath, targetHtml string, next func(resolvedLocation string)) {
+	upgradedPath := reqPath + Slash + targetHtml + DotHtml
+	// Using the r.Host as a folder in m.RootDir.
+	exists, location := m.IsFileFromStaticsRegular(r.Host, upgradedPath)
+	if !exists {
+		upgradedPath = reqPath + Slash + IndexDotHtml
+		exists, location = m.IsFileFromStaticsRegular(r.Host, upgradedPath)
+		if !exists {
+			next(location)
+			return
+			//upgradedPath := reqPath + DotHtml
+			//exists, location = m.IsFileFromStaticsRegular(r.Host, upgradedPath)
+		}
+	}
+	http.ServeFile(w, r, location)
+}
+
 // Checking request host and responding with their corresponding files.
 func (m *FileServer) ServeFiles(w http.ResponseWriter, r *http.Request, next func(resolvedLocation string)) {
 	reqPath := r.URL.Path
@@ -56,8 +74,6 @@ func (m *FileServer) ServeFiles(w http.ResponseWriter, r *http.Request, next fun
 			return
 		}
 		// 4. Serve the target html file if no dot is found in the request.path.
-		upgradedPath := reqPath + Slash + targetHtml + DotHtml
-		//fmt.Println("I: Upgrading Requested URL.Path from:", reqPath, " to:", upgradedPath)
-		m.serveFile(w, r, upgradedPath, next)
+		m.serveHtmlFile(w, r, reqPath, targetHtml, next)
 	}
 }
