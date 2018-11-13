@@ -46,15 +46,13 @@ The structure of contents of a static sites may like:
 		- `/a-normal-blog`
 			- `/a-normal-blog.html` The blog, which will be matched with the path: `/blogs/any-folder/a-normal-blog`.
 	- `blogs.html` The home page for the blogs module, which will be matched with the `/blogs` path.
-		- `<base href="blogs/">` should be added in the `<head>` of the html to make resources referred by relative links work.
 - `/about` The about module.
 	- `/about.html` The home page for the about module, which will be matched with the `/about` path.
-		- `<base href="about/">` should be added in the `<head>` of the html to make resources referred by relative links work.
+		- The relative links like to `some-images.png` will break.
 	- `/some-images.png` Images used in the about module.
 	- `/some-attachments.zip` Attachments used in the about module.
 - `/contact` The contact-us module.
 	- `/contact.html` The home page for the contact-us module, which will be matched with the `/contact` path.
-		- `<base href="contact/">` should be added in the `<head>` of the html to make resources referred by relative links work.
 
 ## Example of Usage
 
@@ -94,3 +92,21 @@ func main() {
 	http.ListenAndServe(mAddress, mStaticServer)
 }
 ```
+
+## `WARNING` The Usage of `<base>`, Relative Links and In-page Anchors
+
+For a normal static sites, the relative links used will break since the trailing slash has been removed.
+
+The usage of `<base href="${page-name}/">` will make the relative links work again while
+[break the in-page anchors](https://stackoverflow.com/questions/8108836/make-anchor-links-refer-to-the-current-page-when-using-base)
+however.
+
+You have to decide whether to use the `<base href="${page-name}/">` or not yourself:
+
+- Use a `<base>`
+	- All in-page anchors will break.
+- No `<base>`
+	- All relative link will break.
+
+*Recommend: No `<base>` and no relative links.*
+	
